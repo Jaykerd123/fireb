@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<CustomUser?>.value(
       value: AuthService().user,
       initialData: null,
-      child: const MaterialApp(
+      child: MaterialApp(
         title: 'fireb',
         home: Wrapper(),
       ),
