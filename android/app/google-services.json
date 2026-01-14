@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1026638132626",
+    "project_id": "coffee-df5fe",
+    "storage_bucket": "coffee-df5fe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026638132626:android:ac55c5d90fb7c41362bd4b",
+        "android_client_info": {
+          "package_name": "com.example.fireb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLXFX7ARTXWyvaIQvhnTboDsgbYdUZfTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
