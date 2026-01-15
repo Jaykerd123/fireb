@@ -1,4 +1,5 @@
-import 'package:fireb/screens/services/sign_in.dart';
+import 'package:fireb/screens/authenticate/register.dart';
+import 'package:fireb/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -11,6 +12,6 @@ class Authenticate extends StatefulWidget {
 class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
-    return const SignIn();
+    return Register();
   }
 }
