@@ -2,7 +2,9 @@ import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  const Register({super.key, required this.toggleView});
+
+  final Function toggleView;
 
   @override
   State<Register> createState() => _RegisterState();
@@ -11,31 +13,36 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
+
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up t obrew crew'),
+        title: const Text('Sign in daw'),
         actions: <Widget>[
           TextButton.icon(
             icon: const Icon(Icons.person),
-            label: const Text('Register'),
-            onPressed: () {},
+            label: const Text('Sign in'),
+            onPressed: () => widget.toggleView(),
           )
         ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               const SizedBox(height: 20),
               TextFormField(
+                validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -43,6 +50,7 @@ class _RegisterState extends State<Register> {
               const SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
+                validator: (val) => val!.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
                   setState(() => password = val);
                 },
@@ -50,10 +58,19 @@ class _RegisterState extends State<Register> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState!.validate()) {
+                    dynamic result = await _authService.registerWithEmailAndPassword(email, password);
+                    if (result == null) {
+                      setState(() => error = 'Please supply a valid email');
+                    }
+                  }
                 },
                 child: const Text('Register'),
+              ),
+              SizedBox(height: 12),
+              Text(
+                error,
+                style: const TextStyle(color: Colors.red, fontSize: 14),
               )
             ],
           ),

@@ -2,7 +2,9 @@ import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  const SignIn({super.key, required this.toggleView});
+
+  final Function toggleView;
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -15,6 +17,7 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String password = '';
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +26,10 @@ class _SignInState extends State<SignIn> {
         actions: <Widget>[
           TextButton.icon(
             icon: const Icon(Icons.person),
-            label: const Text('Register'),
-            onPressed: () {},
+            label: const Text('Mag Register'),
+            onPressed: () {
+              widget.toggleView();
+            },
           )
         ],
       ),
@@ -52,7 +57,7 @@ class _SignInState extends State<SignIn> {
                   print(email);
                   print(password);
                 },
-                child: const Text('Sign In'),
+                child: const Text('Sagiri sign in'),
               )
             ],
           ),
