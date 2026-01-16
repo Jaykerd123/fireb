@@ -1,6 +1,7 @@
 import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fireb/shared/constants.dart';
+import 'package:fireb/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key, required this.toggleView});
@@ -15,16 +16,18 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String error = '';
+  bool loading = false;
+
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? LoadingSpinner() : Scaffold(
       appBar: AppBar(
         title: const Text('Sign In'),
         actions: <Widget>[
@@ -64,10 +67,13 @@ class _SignInState extends State<SignIn> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    print("valid");
+                    setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                     if (result == null) {
-                      setState(() => error = 'Could not sign in');
+                      setState(() {
+                        error = 'Could not sign in with those credentials';
+                        loading = false;
+                      });
                     }
                   }
                 },

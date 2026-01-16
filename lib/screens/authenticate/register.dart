@@ -1,6 +1,7 @@
 import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fireb/shared/constants.dart';
+import 'package:fireb/shared/loading.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.toggleView});
@@ -15,7 +16,7 @@ class _RegisterState extends State<Register> {
 
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
-
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -24,7 +25,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? LoadingSpinner() : Scaffold(
       appBar: AppBar(
         title: const Text('Sign in daw'),
         actions: <Widget>[
@@ -62,9 +63,13 @@ class _RegisterState extends State<Register> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    setState(() => loading = true);
                     dynamic result = await _authService.registerWithEmailAndPassword(email, password);
                     if (result == null) {
-                      setState(() => error = 'Please supply a valid email');
+                      setState(() {
+                        error = 'Please supply a valid email';
+                        loading = false;
+                      });
                     }
                   }
                 },
