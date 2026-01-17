@@ -18,4 +18,9 @@ class DatabaseService{
 
   }
 
+  //   get user doc stream
+  Stream<QuerySnapshot> get users {
+    return usersCollection.snapshots();
+  }
+
 }
