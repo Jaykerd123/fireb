@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthService auth = AuthService();
 
-    void _showSettingsPanel() {
+    void showSettingsPanel() {
       showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -42,11 +42,19 @@ class Home extends StatelessWidget {
             TextButton.icon(
               icon: const Icon(Icons.settings),
               label: const Text('settings'),
-              onPressed: () => _showSettingsPanel(),
+              onPressed: () => showSettingsPanel(),
             )
           ],
         ),
-        body: const UserList(),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/teaparty.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const UserList(),
+        ),
       ),
     );
   }

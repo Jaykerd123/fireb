@@ -24,10 +24,11 @@ class DatabaseService{
   // brew list from snapshot
   List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>?;
       return Brew(
-        name: doc.get('name') ?? '',
-        strength: doc.get('strength') ?? 0,
-        sugars: doc.get('sugar') ?? '0',
+        name: data?['name'] ?? '',
+        sugars: data?['sugar'] ?? '0',
+        strength: data?['strength'] ?? 0,
       );
     }).toList();
   }
