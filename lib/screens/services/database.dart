@@ -12,7 +12,7 @@ class DatabaseService{
 
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
-  Future userUserData (String sugar, String name, int strength) async {
+  Future updateUserData (String sugar, String name, int strength) async {
     return await usersCollection.doc(uid).set({
       'sugar': sugar,
       'name': name,
@@ -34,11 +34,12 @@ class DatabaseService{
 
   // userData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
     return UserData(
       uid: uid!,
-      name: snapshot.get('name'),
-      sugar: snapshot.get('sugar'),
-      strength: snapshot.get('strength')
+      name: data?['name'] ?? 'new crew member',
+      sugar: data?['sugar'] ?? '0',
+      strength: data?['strength'] ?? 100
     );
   }
 
