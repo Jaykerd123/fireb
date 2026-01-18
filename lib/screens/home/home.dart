@@ -1,3 +1,4 @@
+import 'package:fireb/screens/home/settings_form.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fireb/screens/services/database.dart';
@@ -18,7 +19,7 @@ class Home extends StatelessWidget {
         builder: (context) {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            child: Text('bottom panel'),
+            child: SettingsForm(),
           );
         }
       );
