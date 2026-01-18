@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:fireb/models/brew.dart';
 
 class UserList extends StatefulWidget {
   const UserList({super.key});
@@ -12,27 +12,21 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<QuerySnapshot?>(context);
-
-    if (users == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final brews = Provider.of<List<Brew>>(context);
 
     return ListView.builder(
-      itemCount: users.docs.length,
+      itemCount: brews.length,
       itemBuilder: (context, index) {
-        final user = users.docs[index];
-        final data = user.data() as Map<String, dynamic>?;
-
+        final brew = brews[index];
         return Card(
           margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
             leading: CircleAvatar(
               radius: 25.0,
-              backgroundColor: Colors.brown[data?['strength'] ?? 100],
+              backgroundColor: Colors.brown[brew.strength],
             ),
-            title: Text(data?['name'] ?? 'new user'),
-            subtitle: Text('Takes ${data?['sugars'] ?? '0'} sugar(s)'),
+            title: Text(brew.name),
+            subtitle: Text('Takes ${brew.sugars} sugar(s)'),
           ),
         );
       },
