@@ -35,6 +35,18 @@ class _SettingsFormState extends State<SettingsForm> {
           ),
           SizedBox(height: 20.0),
         //   drop down
+          DropdownButtonFormField(
+            decoration: textInputDecoration,
+            value: _currentSugars ?? '0',
+            items: sugars.map((sugar) {
+              return DropdownMenuItem(
+                value: sugar,
+                child: Text('$sugar sugars'),
+              );
+            }).toList(),
+            onChanged: (val) => setState(() => _currentSugars = val),
+
+          ),
         //   slider
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -46,7 +58,9 @@ class _SettingsFormState extends State<SettingsForm> {
             ),
             onPressed: () async {
               if (_formKey.currentState?.validate() ?? false) {
-                // TODO: Handle form submission
+                print(_currentName);
+                print(_currentSugars);
+                print(_currentStrength);
               }
             },
           )
