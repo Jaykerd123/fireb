@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1026638132626",
+    "firebase_url": "https://coffee-df5fe-default-rtdb.firebaseio.com",
     "project_id": "coffee-df5fe",
     "storage_bucket": "coffee-df5fe.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.fireb"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1026638132626-3962a86jhn28o27co9rr6amhfq8u139m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fireb",
+            "certificate_hash": "cb10be1f93c625d0614776685abf009f69bb782c"
+          }
+        },
+        {
+          "client_id": "1026638132626-80i55fah1lu3prmshgf7d81tsc29rb1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBLXFX7ARTXWyvaIQvhnTboDsgbYdUZfTw"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026638132626-80i55fah1lu3prmshgf7d81tsc29rb1h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1026638132626-4op2nl8avnk457pfv7rjqvecv9s9g9sq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fireb"
+              }
+            }
+          ]
         }
       }
     }
