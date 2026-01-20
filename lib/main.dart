@@ -1,6 +1,6 @@
 import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/services/auth.dart';
-import 'package:fireb/screens/wrapper.dart';
+import 'package:fireb/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         title: 'fireb',
-        home: Wrapper(),
+        home: SplashScreen(),
       ),
     );
   }
