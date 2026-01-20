@@ -1,10 +1,10 @@
 import 'package:fireb/screens/home/settings_form.dart';
 import 'package:fireb/screens/services/auth.dart';
-import 'package:fireb/welcome_greet.dart';
 import 'package:flutter/material.dart';
 import 'package:fireb/screens/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:fireb/models/brew.dart';
+import 'package:fireb/screens/home/user_list.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: const WelcomeGreet(),
+          child: const UserList(),
         ),
       ),
     );
