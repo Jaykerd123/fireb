@@ -79,6 +79,20 @@ class _SignInState extends State<SignIn> {
                 },
                 child: const Text('Sagiri sign in'),
               ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () async {
+                  setState(() => loading = true);
+                  dynamic result = await _auth.signInWithGoogle();
+                  if (result == null) {
+                    setState(() {
+                      error = 'Could not sign in with Google';
+                      loading = false;
+                    });
+                  }
+                },
+                child: const Text('Sign in with Google'),
+              ),
               SizedBox(height: 12),
               Text(
                 error,

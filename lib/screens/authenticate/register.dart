@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return loading ? LoadingSpinner() : Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in daw'),
+        title: const Text('Sign up for an account'),
         actions: <Widget>[
           TextButton.icon(
             icon: const Icon(Icons.person),
@@ -74,6 +74,20 @@ class _RegisterState extends State<Register> {
                   }
                 },
                 child: const Text('Register'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () async {
+                  setState(() => loading = true);
+                  dynamic result = await _authService.signInWithGoogle();
+                  if (result == null) {
+                    setState(() {
+                      error = 'Could not sign in with Google';
+                      loading = false;
+                    });
+                  }
+                },
+                child: const Text('Sign in with Google'),
               ),
               SizedBox(height: 12),
               Text(
