@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/services/database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as fb;
 
 class AuthService {
 
@@ -19,30 +20,31 @@ class AuthService {
   }
 
   // sign in anon
-  Future signInAnon() async {
+  Future<CustomUser?> signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
+      if (user != null && result.additionalUserInfo?.isNewUser == true) {
+        await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
+      }
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
 
   // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future<CustomUser?> signInWithEmailAndPassword(String email, String password) async {
     try{
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch(e){
-      print(e.toString());
       return null;
     }
   }
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future<CustomUser?> registerWithEmailAndPassword(String email, String password) async {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
@@ -51,7 +53,6 @@ class AuthService {
       }
       return _userFromFirebaseUser(user);
     } catch(e){
-      print(e.toString());
       return null;
     }
   }
@@ -70,12 +71,33 @@ class AuthService {
       );
       UserCredential result = await _auth.signInWithCredential(credential);
       User? user = result.user;
-      if (user != null) {
+      if (user != null && result.additionalUserInfo?.isNewUser == true) {
         await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
       }
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
+      return null;
+    }
+  }
+
+  // sign in with facebook
+  Future<CustomUser?> signInWithFacebook() async {
+    try {
+      final fb.LoginResult result = await fb.FacebookAuth.instance.login();
+      if (result.status == fb.LoginStatus.success) {
+        final fb.AccessToken? accessToken = result.accessToken;
+        if (accessToken != null) {
+          final AuthCredential credential = FacebookAuthProvider.credential(accessToken.tokenString);
+          UserCredential userCredential = await _auth.signInWithCredential(credential);
+          User? user = userCredential.user;
+          if (user != null && userCredential.additionalUserInfo?.isNewUser == true) {
+            await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
+          }
+          return _userFromFirebaseUser(user);
+        }
+      }
+      return null;
+    } catch (e) {
       return null;
     }
   }
@@ -84,9 +106,10 @@ class AuthService {
   Future<void> signOut() async {
     try {
       await _googleSignIn.signOut();
+      await fb.FacebookAuth.instance.logOut();
       await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+      // It's generally safe to ignore errors on sign out
     }
   }
 

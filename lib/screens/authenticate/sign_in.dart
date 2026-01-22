@@ -93,6 +93,20 @@ class _SignInState extends State<SignIn> {
                 },
                 child: const Text('Sign in with Google'),
               ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () async {
+                  setState(() => loading = true);
+                  dynamic result = await _auth.signInWithFacebook();
+                  if (result == null) {
+                    setState(() {
+                      error = 'Could not sign in with Facebook';
+                      loading = false;
+                    });
+                  }
+                },
+                child: const Text('Sign in with Facebook'),
+              ),
               SizedBox(height: 12),
               Text(
                 error,
