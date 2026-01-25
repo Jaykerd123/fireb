@@ -26,52 +26,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthService>(context);
-
     void showSettingsPanel() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
             return Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-              child: SettingsForm(),
+              child: const SettingsForm(),
             );
           });
     }
 
     final List<Widget> screens = [
-      StreamProvider<List<Brew>>.value(
-        initialData: const [],
-        value: DatabaseService().users,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Home'),
-            actions: <Widget>[
-              TextButton.icon(
-                icon: const Icon(Icons.person),
-                label: const Text('logout'),
-                onPressed: () async {
-                  await auth.signOut();
-                },
-              ),
-              TextButton.icon(
-                icon: const Icon(Icons.settings),
-                label: const Text('settings'),
-                onPressed: () => showSettingsPanel(),
-              )
-            ],
-          ),
-          body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/teaparty.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: const UserList(),
-          ),
-        ),
-      ),
+      const _HomeScreen(),
       const TranslateScreen(),
       const MenuScreen(),
     ];
@@ -95,6 +62,59 @@ class _HomeState extends State<Home> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class _HomeScreen extends StatelessWidget {
+  const _HomeScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = Provider.of<AuthService>(context);
+
+    void showSettingsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+              child: const SettingsForm(),
+            );
+          });
+    }
+
+    return StreamProvider<List<Brew>>.value(
+      initialData: const [],
+      value: DatabaseService().users,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: <Widget>[
+            TextButton.icon(
+              icon: const Icon(Icons.person),
+              label: const Text('logout'),
+              onPressed: () async {
+                await auth.signOut();
+              },
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.settings),
+              label: const Text('settings'),
+              onPressed: () => showSettingsPanel(),
+            )
+          ],
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/teaparty.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const UserList(),
+        ),
       ),
     );
   }
