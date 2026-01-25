@@ -1,3 +1,4 @@
+import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/home/settings_form.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -26,21 +27,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    void showSettingsPanel() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-              child: const SettingsForm(),
-            );
-          });
-    }
+    final user = Provider.of<CustomUser?>(context);
 
     final List<Widget> screens = [
       const _HomeScreen(),
       const TranslateScreen(),
-      const MenuScreen(),
+      if (user != null) const MenuScreen(),
     ];
 
     return Scaffold(
