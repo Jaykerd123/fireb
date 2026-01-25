@@ -43,16 +43,16 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
-                        initialValue: userData.name,
+                        initialValue: _currentName ?? userData.name ?? '',
                         decoration: textInputDecoration,
-                        validator: (val) => val!.isEmpty ? 'Please enter a name' : null,
+                        validator: (val) => (val == null || val.isEmpty) ? 'Please enter a name' : null,
                         onChanged: (val) => setState(() => _currentName = val),
                       ),
                       SizedBox(height: 20.0),
                       //   drop down
                       DropdownButtonFormField(
                         decoration: textInputDecoration,
-                        value: _currentSugars ?? userData.sugar,
+                        value: _currentSugars ?? userData.sugar ?? '0',
                         items: sugars.map((sugar) {
                           return DropdownMenuItem(
                             value: sugar,
@@ -63,9 +63,9 @@ class _SettingsFormState extends State<SettingsForm> {
 
                       ),
                       Slider(
-                          value: (_currentStrength ?? userData.strength).toDouble(),
-                          activeColor: Colors.brown[_currentStrength ?? userData.strength],
-                          inactiveColor: Colors.brown[_currentStrength ?? userData.strength],
+                          value: (_currentStrength ?? userData.strength ?? 100).toDouble(),
+                          activeColor: Colors.brown[(_currentStrength ?? userData.strength ?? 100)],
+                          inactiveColor: Colors.brown[(_currentStrength ?? userData.strength ?? 100)],
                           min: 100,
                           max: 900,
                           divisions: 8,
@@ -83,9 +83,9 @@ class _SettingsFormState extends State<SettingsForm> {
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
                             await DatabaseService(uid: user.uid).updateUserData(
-                              _currentSugars ?? userData.sugar,
-                              _currentName ?? userData.name,
-                              _currentStrength ?? userData.strength
+                              _currentSugars ?? userData.sugar ?? '0',
+                              _currentName ?? userData.name ?? 'new crew member',
+                              _currentStrength ?? userData.strength ?? 100
                             );
                             Navigator.pop(context);
                           }

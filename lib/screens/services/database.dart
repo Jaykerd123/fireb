@@ -21,6 +21,15 @@ class DatabaseService{
 
   }
 
+  Future updateOnboardingData(String avatarUrl, String name, bool isDarkMode) async {
+    return await usersCollection.doc(uid).set({
+      'avatarUrl': avatarUrl,
+      'name': name,
+      'isDarkMode': isDarkMode,
+      'onboardingCompleted': true,
+    });
+  }
+
   // brew list from snapshot
   List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
@@ -40,7 +49,10 @@ class DatabaseService{
       uid: uid!,
       name: data?['name'] ?? 'new crew member',
       sugar: data?['sugar'] ?? '0',
-      strength: data?['strength'] ?? 100
+      strength: data?['strength'] ?? 100,
+      avatarUrl: data?['avatarUrl'] ?? '',
+      isDarkMode: data?['isDarkMode'] ?? false,
+      onboardingCompleted: data?['onboardingCompleted'] ?? false,
     );
   }
 

@@ -24,9 +24,6 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
-      if (user != null && result.additionalUserInfo?.isNewUser == true) {
-        await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
-      }
       return _userFromFirebaseUser(user);
     } catch (e) {
       return null;
@@ -48,9 +45,6 @@ class AuthService {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      if (user != null) {
-        await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
-      }
       return _userFromFirebaseUser(user);
     } catch(e){
       return null;
@@ -71,9 +65,6 @@ class AuthService {
       );
       UserCredential result = await _auth.signInWithCredential(credential);
       User? user = result.user;
-      if (user != null && result.additionalUserInfo?.isNewUser == true) {
-        await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
-      }
       return _userFromFirebaseUser(user);
     } catch (e) {
       return null;
@@ -90,9 +81,6 @@ class AuthService {
           final AuthCredential credential = FacebookAuthProvider.credential(accessToken.tokenString);
           UserCredential userCredential = await _auth.signInWithCredential(credential);
           User? user = userCredential.user;
-          if (user != null && userCredential.additionalUserInfo?.isNewUser == true) {
-            await DatabaseService(uid: user.uid).updateUserData('0', 'new crew member', 100);
-          }
           return _userFromFirebaseUser(user);
         }
       }

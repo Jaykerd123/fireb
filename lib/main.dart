@@ -1,4 +1,5 @@
 import 'package:fireb/models/user.dart';
+import 'package:fireb/screens/home/home.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:fireb/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<CustomUser?>.value(
-      value: AuthService().user,
-      initialData: null,
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+        StreamProvider<CustomUser?>(
+          create: (context) => context.read<AuthService>().user,
+          initialData: null,
+        )
+      ],
       child: MaterialApp(
         title: 'fireb',
-        home: SplashScreen(),
+        home: const SplashScreen(),
+        routes: {
+          '/home': (context) => const Home(),
+        },
       ),
     );
   }
