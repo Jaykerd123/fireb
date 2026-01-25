@@ -83,7 +83,10 @@ class _InitialPageState extends State<InitialPage> {
           onSignUpPressed: _showRegister,
         );
       case 'register':
-        return SignUp(toggleView: _showSignIn);
+        return SignUp(
+          onBackPressed: _showInitial,
+          onLogInPressed: _showSignIn,
+        );
       default:
         return Container();
     }
