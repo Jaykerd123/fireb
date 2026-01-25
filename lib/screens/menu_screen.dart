@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/services/database.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,17 @@ import 'package:provider/provider.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
+
+  ImageProvider _getAvatarImage(String? avatarUrl) {
+    if (avatarUrl == null || avatarUrl.isEmpty) {
+      return const AssetImage('assets/sagiri.jpg'); // Default avatar
+    }
+    if (avatarUrl.startsWith('assets/')) {
+      return AssetImage(avatarUrl);
+    } else {
+      return FileImage(File(avatarUrl));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +35,7 @@ class MenuScreen extends StatelessWidget {
             if (userData?.avatarUrl != null)
               CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(userData!.avatarUrl!),
+                backgroundImage: _getAvatarImage(userData!.avatarUrl),
               ),
             const SizedBox(height: 20),
             Text(
