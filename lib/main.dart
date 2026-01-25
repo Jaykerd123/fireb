@@ -1,6 +1,7 @@
 import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/home/home.dart';
 import 'package:fireb/screens/services/auth.dart';
+import 'package:fireb/screens/services/database.dart';
 import 'package:fireb/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,13 +29,28 @@ class MyApp extends StatelessWidget {
         StreamProvider<CustomUser?>(
           create: (context) => context.read<AuthService>().user,
           initialData: null,
-        )
+        ),
       ],
-      child: MaterialApp(
-        title: 'fireb',
-        home: const SplashScreen(),
-        routes: {
-          '/home': (context) => const Home(),
+      child: Consumer<CustomUser?>(
+        builder: (context, user, _) {
+          return StreamProvider<UserData?>.value(
+            value: user != null ? DatabaseService(uid: user.uid).userData : null,
+            initialData: null,
+            child: Consumer<UserData?>(
+              builder: (context, userData, _) {
+                return MaterialApp(
+                  title: 'fireb',
+                  theme: ThemeData.light(),
+                  darkTheme: ThemeData.dark(),
+                  themeMode: userData?.isDarkMode ?? false ? ThemeMode.dark : ThemeMode.light,
+                  home: const SplashScreen(),
+                  routes: {
+                    '/home': (context) => const Home(),
+                  },
+                );
+              },
+            ),
+          );
         },
       ),
     );
