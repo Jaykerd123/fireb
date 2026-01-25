@@ -33,23 +33,45 @@ class _InitialPageState extends State<InitialPage> {
     switch (_view) {
       case 'initial':
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Welcome'),
-          ),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: _showSignIn,
-                  child: const Text('Login'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _showRegister,
-                  child: const Text('Sign Up'),
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/app_logo/logo_black.png', height: 120),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Higa',
+                    style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'A Higaonon Language Translator',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 50),
+                  ElevatedButton(
+                    onPressed: _showSignIn,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    child: const Text('Login'),
+                  ),
+                  const SizedBox(height: 20),
+                  OutlinedButton(
+                    onPressed: _showRegister,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      side: const BorderSide(color: Colors.black),
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    child: const Text('Sign Up'),
+                  ),
+                ],
+              ),
             ),
           ),
         );

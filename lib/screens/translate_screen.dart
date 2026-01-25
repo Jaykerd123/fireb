@@ -1,8 +1,5 @@
-import 'dart:async';
-
-import 'package:avatar_glow/avatar_glow.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
-import 'package:mic_stream/mic_stream.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class TranslateScreen extends StatefulWidget {
@@ -13,44 +10,26 @@ class TranslateScreen extends StatefulWidget {
 }
 
 class _TranslateScreenState extends State<TranslateScreen> {
-  bool _isRecording = false;
-  Stream<List<int>>? _micStream;
-  StreamSubscription<List<int>>? _micStreamSubscription;
-  List<double> _waveformData = [];
+  late final RecorderController _recorderController;
 
   @override
   void initState() {
     super.initState();
+    _recorderController = RecorderController();
     _requestMicPermission();
   }
 
   Future<void> _requestMicPermission() async {
-    final status = await Permission.microphone.request();
-    if (status.isGranted) {
-      // Permission granted
-    } else if (status.isDenied) {
-      // Permission denied
-    }
+    await Permission.microphone.request();
   }
 
   void _toggleRecording() async {
-    if (_isRecording) {
-      _micStreamSubscription?.cancel();
-      setState(() {
-        _isRecording = false;
-        _waveformData = [];
-      });
+    if (_recorderController.isRecording) {
+      await _recorderController.stop();
     } else {
-      _micStream = await MicStream.microphone(sampleRate: 16000);
-      _micStreamSubscription = _micStream?.listen((data) {
-        setState(() {
-          _waveformData = data.map((e) => e.toDouble() / 150).toList();
-        });
-      });
-      setState(() {
-        _isRecording = true;
-      });
+      await _recorderController.record();
     }
+    setState(() {});
   }
 
   @override
@@ -70,28 +49,28 @@ class _TranslateScreenState extends State<TranslateScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: CustomPaint(
-                painter: WaveformPainter(waveformData: _waveformData),
-                child: Container(),
+            AudioWaveforms(
+              size: const Size(double.infinity, 200.0),
+              recorderController: _recorderController,
+              waveStyle: const WaveStyle(
+                waveColor: Colors.blue,
+                showDurationLabel: true,
+                spacing: 8.0,
+                showBottom: false,
+                extendWaveform: true,
+                showMiddleLine: false,
               ),
             ),
             const SizedBox(height: 20),
-            AvatarGlow(
-              animate: _isRecording,
-              glowColor: Colors.red,
-              duration: const Duration(milliseconds: 2000),
-              repeat: true,
-              child: GestureDetector(
-                onTap: _toggleRecording,
-                child: const CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.red,
-                  child: Icon(
-                    Icons.mic,
-                    color: Colors.white,
-                    size: 40,
-                  ),
+            GestureDetector(
+              onTap: _toggleRecording,
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.red,
+                child: Icon(
+                  _recorderController.isRecording ? Icons.stop : Icons.mic,
+                  color: Colors.white,
+                  size: 40,
                 ),
               ),
             ),
@@ -100,35 +79,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
       ),
     );
   }
-}
-
-class WaveformPainter extends CustomPainter {
-  final List<double> waveformData;
-
-  WaveformPainter({required this.waveformData});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.blue
-      ..strokeWidth = 2.0;
-
-    if (waveformData.isEmpty) return;
-
-    final path = Path();
-    path.moveTo(0, size.height / 2);
-
-    for (var i = 0; i < waveformData.length; i++) {
-      final x = size.width * i / waveformData.length;
-      final y = size.height / 2 + waveformData[i] * (size.height / 2);
-      path.lineTo(x, y);
-    }
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  void dispose() {
+    _recorderController.dispose();
+    super.dispose();
   }
 }

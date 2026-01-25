@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:fireb/screens/wrapper.dart';
+import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,48 +9,63 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
+class _SplashScreenState extends State<SplashScreen> {
+  bool _logoMoved = false;
+  bool _textVisible = false;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    );
-    _animationController.forward();
-    Timer(
-      const Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => const Wrapper(),
-        ),
+    _startAnimation();
+  }
+
+  void _startAnimation() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _logoMoved = true;
+    });
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() {
+      _textVisible = true;
+    });
+    await Future.delayed(const Duration(seconds: 3));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => const Wrapper(),
       ),
     );
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeTransition(
-        opacity: _animation,
-        child: const Center(
-          child: Text(
-            'Welcome',
-            style: TextStyle(fontSize: 24.0),
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(seconds: 1),
+              curve: Curves.easeInOut,
+              margin: EdgeInsets.only(bottom: _logoMoved ? 100.0 : 0.0),
+              child: Image.asset('assets/app_logo/logo_black.png', height: 150),
+            ),
+            AnimatedOpacity(
+              duration: const Duration(seconds: 1),
+              opacity: _textVisible ? 1.0 : 0.0,
+              child: Column(
+                children: const [
+                  Text(
+                    'GOOD DAY!',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    'MAAYAD HA ADLAW',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
