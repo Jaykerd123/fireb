@@ -1,5 +1,5 @@
 import 'package:fireb/screens/authenticate/register.dart';
-import 'package:fireb/screens/authenticate/sign_in.dart';
+import 'package:fireb/screens/authenticate/login_page.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -20,7 +20,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     if (showSignIn) {
-      return SignIn(toggleView: toggleView);
+      return LoginPage(toggleView: toggleView);
     } else {
       return Register(toggleView: toggleView);
     }

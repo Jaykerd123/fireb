@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fireb/shared/constants.dart';
 import 'package:fireb/shared/loading.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key, required this.toggleView});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key, required this.toggleView});
 
   final Function toggleView;
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignInState extends State<SignIn> {
+class _LoginPageState extends State<LoginPage> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();

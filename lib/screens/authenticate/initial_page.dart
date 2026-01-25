@@ -1,5 +1,5 @@
 import 'package:fireb/screens/authenticate/register.dart';
-import 'package:fireb/screens/authenticate/sign_in.dart';
+import 'package:fireb/screens/authenticate/login_page.dart';
 import 'package:flutter/material.dart';
 
 class InitialPage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _InitialPageState extends State<InitialPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset('assets/app_logo/logo_black.png', height: 120),
+                  Image.asset('assets/app_logo/logo_black.png', height: 100),
                   const SizedBox(height: 20),
                   const Text(
                     'Higa',
@@ -57,6 +57,9 @@ class _InitialPageState extends State<InitialPage> {
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
                     child: const Text('Login'),
                   ),
@@ -67,6 +70,9 @@ class _InitialPageState extends State<InitialPage> {
                       foregroundColor: Colors.black,
                       side: const BorderSide(color: Colors.black),
                       minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
                     child: const Text('Sign Up'),
                   ),
@@ -76,7 +82,7 @@ class _InitialPageState extends State<InitialPage> {
           ),
         );
       case 'signin':
-        return SignIn(toggleView: toggleView);
+        return LoginPage(toggleView: toggleView);
       case 'register':
         return Register(toggleView: toggleView);
       default:
