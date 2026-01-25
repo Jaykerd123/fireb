@@ -5,9 +5,14 @@ import 'package:fireb/shared/constants.dart';
 import 'package:fireb/shared/loading.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.toggleView});
+  const LoginPage({
+    super.key,
+    required this.onBackPressed,
+    required this.onSignUpPressed,
+  });
 
-  final Function toggleView;
+  final Function onBackPressed;
+  final Function onSignUpPressed;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -34,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
               elevation: 0,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => widget.toggleView(),
+                onPressed: () => widget.onBackPressed(),
               ),
             ),
             body: SingleChildScrollView(
@@ -167,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                           const Text("Don't have an account? "),
                           GestureDetector(
                             onTap: () {
-                              widget.toggleView();
+                              widget.onSignUpPressed();
                             },
                             child: const Text(
                               'Sign up',

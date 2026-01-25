@@ -1,4 +1,4 @@
-import 'package:fireb/screens/authenticate/register.dart';
+import 'package:fireb/screens/authenticate/sign_up.dart';
 import 'package:fireb/screens/authenticate/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _AuthenticateState extends State<Authenticate> {
     if (showSignIn) {
       return LoginPage(toggleView: toggleView);
     } else {
-      return Register(toggleView: toggleView);
+      return SignUp(toggleView: toggleView);
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:fireb/screens/authenticate/register.dart';
+import 'package:fireb/screens/authenticate/sign_up.dart';
 import 'package:fireb/screens/authenticate/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,14 +22,6 @@ class _InitialPageState extends State<InitialPage> {
 
   void _showInitial() {
     setState(() => _view = 'initial');
-  }
-
-  void toggleView() {
-    if (_view == 'signin') {
-      setState(() => _view = 'register');
-    } else {
-      setState(() => _view = 'signin');
-    }
   }
 
   @override
@@ -86,9 +78,12 @@ class _InitialPageState extends State<InitialPage> {
           ),
         );
       case 'signin':
-        return LoginPage(toggleView: _showInitial);
+        return LoginPage(
+          onBackPressed: _showInitial,
+          onSignUpPressed: _showRegister,
+        );
       case 'register':
-        return Register(toggleView: toggleView);
+        return SignUp(toggleView: _showSignIn);
       default:
         return Container();
     }
