@@ -38,11 +38,14 @@ class MyApp extends StatelessWidget {
             initialData: null,
             child: Consumer<UserData?>(
               builder: (context, userData, _) {
+                final isLoggedIn = user != null;
+                final isDarkMode = isLoggedIn && (userData?.isDarkMode ?? false);
+
                 return MaterialApp(
                   title: 'fireb',
                   theme: ThemeData.light(),
                   darkTheme: ThemeData.dark(),
-                  themeMode: userData?.isDarkMode ?? false ? ThemeMode.dark : ThemeMode.light,
+                  themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
                   home: const SplashScreen(),
                   routes: {
                     '/home': (context) => const Home(),
