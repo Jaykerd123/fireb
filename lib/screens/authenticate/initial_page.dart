@@ -20,6 +20,10 @@ class _InitialPageState extends State<InitialPage> {
     setState(() => _view = 'register');
   }
 
+  void _showInitial() {
+    setState(() => _view = 'initial');
+  }
+
   void toggleView() {
     if (_view == 'signin') {
       setState(() => _view = 'register');
@@ -82,7 +86,7 @@ class _InitialPageState extends State<InitialPage> {
           ),
         );
       case 'signin':
-        return LoginPage(toggleView: toggleView);
+        return LoginPage(toggleView: _showInitial);
       case 'register':
         return Register(toggleView: toggleView);
       default:

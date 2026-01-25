@@ -28,12 +28,13 @@ class _LoginPageState extends State<LoginPage> {
     return loading
         ? const LoadingSpinner()
         : Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => widget.toggleView(),
               ),
             ),
             body: SingleChildScrollView(
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 40),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                        decoration: textInputDecoration.copyWith(labelText: 'Email'),
                         validator: (val) =>
                             val!.isEmpty ? 'Enter an email' : null,
                         onChanged: (val) {
@@ -68,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 20),
                       TextFormField(
                         decoration:
-                            textInputDecoration.copyWith(hintText: 'Password'),
+                            textInputDecoration.copyWith(labelText: 'Password'),
                         obscureText: true,
                         validator: (val) => val!.length < 6
                             ? 'Enter a password 6+ chars long'
