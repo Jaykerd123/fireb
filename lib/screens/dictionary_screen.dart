@@ -78,9 +78,20 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          word.higaonon,
-                          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              word.higaonon,
+                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.volume_up, color: Colors.blueAccent),
+                              onPressed: () {
+                                // TODO: Implement text-to-speech pronunciation
+                              },
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 4),
                         Text(
