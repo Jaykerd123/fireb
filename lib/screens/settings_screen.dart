@@ -15,6 +15,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _notificationsEnabled = true;
   bool _soundEffectsEnabled = false;
+  bool _autoplayEnabled = true;
+  bool _dailyReminderEnabled = false;
+  bool _offlineModeEnabled = false;
 
   ImageProvider _getAvatarImage(String? avatarUrl) {
     if (avatarUrl == null || avatarUrl.isEmpty) {
@@ -119,6 +122,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 secondary: const Icon(Icons.dark_mode_outlined),
+              ),
+              const SizedBox(height: 30),
+              const Text(
+                'Learning',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+              const Divider(),
+              SwitchListTile(
+                title: const Text('Autoplay'),
+                subtitle: const Text('Automatically play pronunciations'),
+                value: _autoplayEnabled,
+                onChanged: (bool value) {
+                  setState(() {
+                    _autoplayEnabled = value;
+                  });
+                },
+                secondary: const Icon(Icons.play_circle_outline),
+              ),
+              SwitchListTile(
+                title: const Text('Daily Reminder'),
+                subtitle: const Text('Remind me to practice'),
+                value: _dailyReminderEnabled,
+                onChanged: (bool value) {
+                  setState(() {
+                    _dailyReminderEnabled = value;
+                  });
+                },
+                secondary: const Icon(Icons.notifications_active_outlined),
+              ),
+              SwitchListTile(
+                title: const Text('Offline Mode'),
+                subtitle: const Text('Download content for offline use'),
+                value: _offlineModeEnabled,
+                onChanged: (bool value) {
+                  setState(() {
+                    _offlineModeEnabled = value;
+                  });
+                },
+                secondary: const Icon(Icons.download_outlined),
               ),
             ],
           ),
