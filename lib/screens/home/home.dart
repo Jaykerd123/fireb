@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:fireb/models/user.dart';
 import 'package:fireb/models/word.dart';
 import 'package:fireb/screens/services/auth.dart';
+import 'package:fireb/screens/services/history_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -101,8 +102,9 @@ class _HomeScreenState extends State<_HomeScreen> {
     }
   }
 
-  void _speak(String text) async {
-    await _flutterTts.speak(text);
+  void _speak(Word word) async {
+    Provider.of<HistoryService>(context, listen: false).addWordToHistory(word);
+    await _flutterTts.speak(word.higaonon);
   }
 
   ImageProvider _getAvatarImage(String? avatarUrl) {
@@ -204,7 +206,7 @@ class _HomeScreenState extends State<_HomeScreen> {
                           ),
                           IconButton(
                             icon: Icon(Icons.volume_up, color: theme.colorScheme.secondary, size: 30),
-                            onPressed: () => _speak(_wordOfTheDay!.higaonon),
+                            onPressed: () => _speak(_wordOfTheDay!),
                           ),
                         ],
                       ),
@@ -240,19 +242,46 @@ class _HomeScreenState extends State<_HomeScreen> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textTheme.bodySmall?.color),
         ),
         const SizedBox(height: 12),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Center(
-            child: Text(
-              'Your browsing history will appear here.',
-              style: TextStyle(color: theme.textTheme.bodySmall?.color, fontStyle: FontStyle.italic),
-            ),
-          ),
+        Consumer<HistoryService>(
+          builder: (context, historyService, child) {
+            if (historyService.history.isEmpty) {
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text(
+                    'Your browsing history will appear here.',
+                    style: TextStyle(color: theme.textTheme.bodySmall?.color, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              );
+            } else {
+              return SizedBox(
+                height: 150,
+                child: ListView.builder(
+                  itemCount: historyService.history.length,
+                  itemBuilder: (context, index) {
+                    final word = historyService.history[index];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      child: ListTile(
+                        title: Text(word.higaonon),
+                        subtitle: Text(word.english),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.volume_up, size: 22),
+                          onPressed: () => _speak(word),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+          },
         ),
       ],
     );

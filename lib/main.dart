@@ -2,6 +2,7 @@ import 'package:fireb/models/user.dart';
 import 'package:fireb/screens/home/home.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:fireb/screens/services/database.dart';
+import 'package:fireb/screens/services/history_service.dart';
 import 'package:fireb/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         StreamProvider<CustomUser?>(
           create: (context) => context.read<AuthService>().user,
           initialData: null,
+        ),
+        ChangeNotifierProvider<HistoryService>(
+          create: (_) => HistoryService(),
         ),
       ],
       child: Consumer<CustomUser?>(

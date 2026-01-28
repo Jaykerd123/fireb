@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:fireb/models/word.dart';
+import 'package:fireb/screens/services/history_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -62,8 +64,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
     }
   }
 
-  void _speak(String text) async {
-    await _flutterTts.speak(text);
+  void _speak(Word word) async {
+    Provider.of<HistoryService>(context, listen: false).addWordToHistory(word);
+    await _flutterTts.speak(word.higaonon);
   }
 
   Future<void> _requestMicPermission() async {
@@ -189,7 +192,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.volume_up, color: theme.colorScheme.secondary, size: 30),
-                  onPressed: () => _speak(word.higaonon),
+                  onPressed: () => _speak(word),
                 ),
               ],
             ),

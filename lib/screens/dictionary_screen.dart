@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:fireb/models/word.dart';
+import 'package:fireb/screens/services/history_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:provider/provider.dart';
 
 class DictionaryScreen extends StatefulWidget {
   const DictionaryScreen({super.key});
@@ -37,13 +39,11 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
 
   void _initializeTts() {
     _flutterTts = FlutterTts();
-    // You can set the language here if you know the BCP 47 language code for Higaonon.
-    // For example, if it were 'fil-PH' for Filipino:
-    // _flutterTts.setLanguage('fil-PH');
   }
 
-  void _speak(String text) async {
-    await _flutterTts.speak(text);
+  void _speak(Word word) async {
+    Provider.of<HistoryService>(context, listen: false).addWordToHistory(word);
+    await _flutterTts.speak(word.higaonon);
   }
 
   void _filterWords() {
@@ -108,7 +108,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.volume_up, color: Colors.blueAccent),
-                              onPressed: () => _speak(word.higaonon),
+                              onPressed: () => _speak(word),
                             ),
                           ],
                         ),
