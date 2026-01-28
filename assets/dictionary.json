@@ -1,0 +1,83 @@
+
+[
+  {
+    "higaonon": "Bana",
+    "tagalog": "Asawa (lalaki)",
+    "part_of_speech": "Noun",
+    "english": "Husband",
+    "example_higaonon": "Si Juan an bana ni Maria.",
+    "example_english": "Juan is Maria's husband."
+  },
+  {
+    "higaonon": "Balay",
+    "tagalog": "Bahay",
+    "part_of_speech": "Noun",
+    "english": "House",
+    "example_higaonon": "Dakula an balay nami.",
+    "example_english": "Our house is big."
+  },
+  {
+    "higaonon": "Kaon",
+    "tagalog": "Kain",
+    "part_of_speech": "Verb",
+    "english": "Eat",
+    "example_higaonon": "Gusto ko mukaon.",
+    "example_english": "I want to eat."
+  },
+  {
+    "higaonon": "Hampang",
+    "tagalog": "Laro",
+    "part_of_speech": "Verb",
+    "english": "Play",
+    "example_higaonon": "Maghampang kita sa gawas.",
+    "example_english": "Let's play outside."
+  },
+  {
+    "higaonon": "Mabayo",
+    "tagalog": "Maganda",
+    "part_of_speech": "Adjective",
+    "english": "Beautiful",
+    "example_higaonon": "Mabayo an dalaga.",
+    "example_english": "The lady is beautiful."
+  },
+  {
+    "higaonon": "Danaw",
+    "tagalog": "Lawa",
+    "part_of_speech": "Noun",
+    "english": "Lake",
+    "example_higaonon": "Malinaw an danaw.",
+    "example_english": "The lake is clear."
+  },
+  {
+    "higaonon": "Bulan",
+    "tagalog": "Buwan",
+    "part_of_speech": "Noun",
+    "english": "Moon",
+    "example_higaonon": "Puno an bulan karon.",
+    "example_english": "The moon is full tonight."
+  },
+  {
+    "higaonon": "Sapa",
+    "tagalog": "Ilog",
+    "part_of_speech": "Noun",
+    "english": "River",
+    "example_higaonon": "Naligo kami sa sapa.",
+    "example_english": "We swam in the river."
+  },
+  {
+    "higaonon": "Gugma",
+    "tagalog": "Pag-ibig",
+    "part_of_speech": "Noun",
+    "english": "Love",
+    "example_higaonon": "Tinuod an gugma ko kanimo.",
+    "example_english": "My love for you is true."
+  },
+  {
+    "higaonon": "Inom",
+    "tagalog": "Inom",
+    "part_of_speech": "Verb",
+    "english": "Drink",
+    "example_higaonon": "Gusto ko moinom ug tubig.",
+    "example_english": "I want to drink water."
+  }
+]

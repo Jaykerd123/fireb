@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:fireb/models/user.dart';
+import 'package:fireb/screens/about_screen.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:fireb/screens/services/database.dart';
 import 'package:fireb/screens/settings_screen.dart';
@@ -113,7 +114,10 @@ class MenuScreen extends StatelessWidget {
                 title: 'About',
                 subtitle: 'App information',
                 onTap: () {
-                  // TODO: Implement navigation
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AboutScreen()),
+                  );
                 },
               ),
 
@@ -162,6 +166,20 @@ class MenuScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 12)),
                 ),
+              ),
+              const SizedBox(height: 20),
+               const Column(
+                children: [
+                  Text(
+                    'Higa - Language Learning Platform',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Version 1.0.0',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
             ],
