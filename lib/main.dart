@@ -31,15 +31,20 @@ class MyApp extends StatelessWidget {
           create: (context) => context.read<AuthService>().user,
           initialData: null,
         ),
-        ChangeNotifierProvider<HistoryService>(
-          create: (_) => HistoryService(),
-        ),
       ],
       child: Consumer<CustomUser?>(
         builder: (context, user, _) {
-          return StreamProvider<UserData?>.value(
-            value: user != null ? DatabaseService(uid: user.uid).userData : null,
-            initialData: null,
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<HistoryService>(
+                key: ValueKey(user?.uid),
+                create: (_) => HistoryService(),
+              ),
+              StreamProvider<UserData?>.value(
+                value: user != null ? DatabaseService(uid: user.uid).userData : null,
+                initialData: null,
+              ),
+            ],
             child: Consumer<UserData?>(
               builder: (context, userData, _) {
                 final isLoggedIn = user != null;
