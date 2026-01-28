@@ -46,7 +46,33 @@ class MenuScreen extends StatelessWidget {
             icon: const Icon(Icons.person),
             label: const Text('logout'),
             onPressed: () async {
-              await auth.signOut();
+              final bool? shouldLogout = await showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Confirm Logout'),
+                    content: const Text('Are you sure you want to log out?'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Logout'),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (shouldLogout == true) {
+                await auth.signOut();
+              }
             },
           ),
           TextButton.icon(
