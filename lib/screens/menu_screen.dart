@@ -2,9 +2,9 @@
 import 'dart:io';
 
 import 'package:fireb/models/user.dart';
-import 'package:fireb/screens/home/settings_form.dart';
 import 'package:fireb/screens/services/auth.dart';
 import 'package:fireb/screens/services/database.dart';
+import 'package:fireb/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,20 +22,8 @@ class MenuScreen extends StatelessWidget {
     }
   }
 
-  void _showSettingsPanel(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            child: const SettingsForm(),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<CustomUser?>(context);
     final userData = Provider.of<UserData?>(context);
     final auth = Provider.of<AuthService>(context);
 
@@ -112,7 +100,12 @@ class MenuScreen extends StatelessWidget {
                 icon: Icons.settings_outlined,
                 title: 'Settings',
                 subtitle: 'App preferences',
-                onTap: () => _showSettingsPanel(context),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  );
+                },
               ),
               _buildMenuListItem(
                 context: context,
