@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:fireb/models/user.dart';
@@ -97,6 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _notificationsEnabled = value;
                   });
                 },
+                secondary: const Icon(Icons.notifications_outlined),
               ),
               SwitchListTile(
                 title: const Text('Sound Effect'),
@@ -107,6 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _soundEffectsEnabled = value;
                   });
                 },
+                secondary: const Icon(Icons.volume_up_outlined),
               ),
               SwitchListTile(
                 title: const Text('Dark Mode'),
@@ -117,6 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     DatabaseService(uid: user.uid).updateTheme(value);
                   }
                 },
+                secondary: const Icon(Icons.dark_mode_outlined),
               ),
             ],
           ),
