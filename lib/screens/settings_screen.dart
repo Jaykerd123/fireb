@@ -162,6 +162,67 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 secondary: const Icon(Icons.download_outlined),
               ),
+              const SizedBox(height: 30),
+              const Text(
+                'Other',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.language_outlined),
+                title: const Text('Language'),
+                subtitle: const Text('English'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  // TODO: Implement language selection
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.privacy_tip_outlined),
+                title: const Text('Privacy'),
+                subtitle: const Text('Manage your data'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  // TODO: Implement privacy screen navigation
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.help_outline),
+                title: const Text('Help & Support'),
+                subtitle: const Text('Get help and FAQs'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  // TODO: Implement help screen navigation
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: const Text('Clear Cache'),
+                subtitle: const Text('Free up storage space'),
+                onTap: () {
+                  // TODO: Implement clear cache functionality
+                },
+              ),
+              const SizedBox(height: 40),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    // TODO: Implement reset to default settings
+                  },
+                  child: const Text(
+                    'Reset to Default Settings',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
