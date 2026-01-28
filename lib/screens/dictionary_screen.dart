@@ -27,6 +27,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     final data = await json.decode(response) as List;
     setState(() {
       _words = data.map((word) => Word.fromJson(word)).toList();
+      _words.sort((a, b) => a.higaonon.compareTo(b.higaonon));
       _filteredWords = _words;
     });
   }
