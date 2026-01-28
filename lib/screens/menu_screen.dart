@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:fireb/models/user.dart';
+import 'package:fireb/screens/home/settings_form.dart';
+import 'package:fireb/screens/services/auth.dart';
 import 'package:fireb/screens/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +25,36 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     final userData = Provider.of<UserData?>(context);
+    final auth = Provider.of<AuthService>(context);
+
+    void showSettingsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+              child: const SettingsForm(),
+            );
+          });
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menu'),
+        actions: <Widget>[
+          TextButton.icon(
+            icon: const Icon(Icons.person),
+            label: const Text('logout'),
+            onPressed: () async {
+              await auth.signOut();
+            },
+          ),
+          TextButton.icon(
+            icon: const Icon(Icons.settings),
+            label: const Text('settings'),
+            onPressed: () => showSettingsPanel(),
+          )
+        ],
       ),
       body: Center(
         child: Column(

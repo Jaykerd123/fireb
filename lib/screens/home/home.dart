@@ -64,7 +64,6 @@ class _HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthService>(context);
 
     void showSettingsPanel() {
       showModalBottomSheet(
@@ -83,20 +82,6 @@ class _HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
-          actions: <Widget>[
-            TextButton.icon(
-              icon: const Icon(Icons.person),
-              label: const Text('logout'),
-              onPressed: () async {
-                await auth.signOut();
-              },
-            ),
-            TextButton.icon(
-              icon: const Icon(Icons.settings),
-              label: const Text('settings'),
-              onPressed: () => showSettingsPanel(),
-            )
-          ],
         ),
         body: Container(
           decoration: const BoxDecoration(
